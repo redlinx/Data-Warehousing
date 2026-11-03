@@ -38,6 +38,22 @@ SELECT	dw_world.dim_country.country_id,
 FROM world.country
 INNER JOIN dw_world.dim_country ON dw_world.dim_country.country = world.country.name;
 
+-- SQL-005
+INSERT INTO dw_world.dim_language(language)
+SELECT	DISTINCT world.countrylanguage.language
+FROM world.countrylanguage;
+
+-- SQL-006
+INSERT INTO dw_world.fact_country_language()
+SELECT 	dw_world.dim_language.language_id,
+		-- world.countrylanguage.Language,
+		dw_world.dim_country.country_id,
+		-- world.country.name,
+		world.countrylanguage.Percentage 
+FROM world.countrylanguage
+INNER JOIN world.country ON world.country.code = world.countrylanguage.countrycode
+INNER JOIN dw_world.dim_country ON dw_world.dim_country.country = world.country.name
+INNER JOIN dw_world.dim_language ON dw_world.dim_language.language = world.countrylanguage.Language;
 
 
 
