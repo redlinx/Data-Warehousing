@@ -20,5 +20,10 @@ INNER JOIN world.country ON world.city.CountryCode = world.country.code
 INNER JOIN dw_world.dim_country ON dw_world.dim_country.country = world.country.name;
 
 -- SQL-003
-SELECT *
-FROM world.city;
+INSERT INTO dw_world.fact_city_population()
+SELECT	dw_world.dim_city.city_id,
+		-- world.city.name,
+		world.city.Population
+FROM world.city
+INNER JOIN dw_world.dim_city ON dw_world.dim_city.city = world.city.name;
+
