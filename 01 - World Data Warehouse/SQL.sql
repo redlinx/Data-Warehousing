@@ -27,3 +27,27 @@ SELECT	dw_world.dim_city.city_id,
 FROM world.city
 INNER JOIN dw_world.dim_city ON dw_world.dim_city.city = world.city.name;
 
+-- SQL-004
+INSERT INTO dw_world.fact_country_population()
+SELECT	dw_world.dim_country.country_id,
+		-- world.country.name,
+		world.country.population,
+		world.country.LifeExpectancy,
+        world.country.GNP,
+        world.country.GNPOld
+FROM world.country
+INNER JOIN dw_world.dim_country ON dw_world.dim_country.country = world.country.name;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
