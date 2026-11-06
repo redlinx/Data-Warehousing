@@ -73,8 +73,9 @@ GROUP BY dw_world.dim_country.continent;
 
 
 -- SQL-009 OLAP Operation Rollup by Language Usage
-SELECT 	dw_world.dim_language.language,
-		SUM((dw_world.fact_country_language.speaker_precentage/100) * dw_world.fact_country_population.country_population) AS number_of_speaker
+SELECT row_number() OVER (ORDER BY ROUND(SUM((dw_world.fact_country_language.speaker_precentage/100) * dw_world.fact_country_population.country_population)) DESC) AS language_rank,
+		dw_world.dim_language.language,
+		ROUND(SUM((dw_world.fact_country_language.speaker_precentage/100) * dw_world.fact_country_population.country_population)) AS number_of_speaker
 FROM dw_world.fact_country_language
 INNER JOIN dw_world.dim_language ON dw_world.fact_country_language.language_id = dw_world.dim_language.language_id
 INNER JOIN dw_world.dim_country ON dw_world.fact_country_language.country_id = dw_world.dim_country.country_id
