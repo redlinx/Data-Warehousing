@@ -1,0 +1,7 @@
+continent,SUM(dw_world.fact_city_population.CityPopulation)
+Asia,715727823
+Europe,249459060
+Africa,138154083
+Oceania,14549918
+"North America",200308614
+"South America",182367296

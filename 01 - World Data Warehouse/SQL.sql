@@ -55,6 +55,26 @@ INNER JOIN world.country ON world.country.code = world.countrylanguage.countryco
 INNER JOIN dw_world.dim_country ON dw_world.dim_country.country = world.country.name
 INNER JOIN dw_world.dim_language ON dw_world.dim_language.language = world.countrylanguage.Language;
 
+-- SQL-007 OLAP Operation Rollup by Country
+SELECT dw_world.dim_country.country,
+		SUM(dw_world.fact_city_population.CityPopulation)
+FROM dw_world.fact_city_population
+INNER JOIN dw_world.dim_city ON dw_world.fact_city_population.city_id = dw_world.dim_city.city_id
+INNER JOIN dw_world.dim_country ON dw_world.dim_city.country_id = dw_world.dim_country.country_id
+GROUP BY dw_world.dim_country.country_id;
+
+
+-- SQL-008 OLAP Operation Rollup by Continent
+SELECT dw_world.dim_country.continent,
+		SUM(dw_world.fact_city_population.CityPopulation)
+FROM dw_world.fact_city_population
+INNER JOIN dw_world.dim_city ON dw_world.fact_city_population.city_id = dw_world.dim_city.city_id
+INNER JOIN dw_world.dim_country ON dw_world.dim_city.country_id = dw_world.dim_country.country_id
+GROUP BY dw_world.dim_country.continent;
+
+
+
+
 
 
 
