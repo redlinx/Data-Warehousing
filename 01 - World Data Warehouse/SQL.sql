@@ -72,6 +72,15 @@ INNER JOIN dw_world.dim_city ON dw_world.fact_city_population.city_id = dw_world
 INNER JOIN dw_world.dim_country ON dw_world.dim_city.country_id = dw_world.dim_country.country_id
 GROUP BY dw_world.dim_country.continent;
 
+-- SQL-009 OLAP Operation Rollup by Language Usage
+SELECT dw_world.dim_language.language,
+		SUM((dw_world.fact_country_language.speaker_precentage/100) * dw_world.fact_country_population.country_population) AS number_of_speaker
+FROM dw_world.fact_country_language
+INNER JOIN dw_world.dim_language ON dw_world.fact_country_language.language_id = dw_world.dim_language.language_id
+INNER JOIN dw_world.dim_country ON dw_world.fact_country_language.country_id = dw_world.dim_country.country_id
+INNER JOIN dw_world.fact_country_population ON dw_world.dim_country.country_id = dw_world.fact_country_population.dim_country_country_id
+GROUP BY dw_world.dim_language.language
+ORDER BY number_of_speaker DESC;
 
 
 
